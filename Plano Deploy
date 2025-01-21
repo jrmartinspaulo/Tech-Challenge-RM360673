@@ -1,0 +1,93 @@
+1. Cenário de Uso da API
+A API será utilizada em um sistema de previsão de demanda para produtos vitivinícolas (vinhos, sucos e derivados).
+Esse sistema ajudará produtores e distribuidores a planejar a produção, comercialização e logística com base em dados
+históricos e tendências de mercado.
+
+
+2. Arquitetura do Projeto
+Visão Geral
+Ingestão de Dados:
+A API realiza o scraping dos dados disponíveis no site da Embrapa e fornece essas informações em formato JSON.
+Armazenamento:
+Os dados retornados pela API serão armazenados em uma base de dados relacional para facilitar consultas e análises.
+Processamento e Enriquecimento:
+Um pipeline de ETL processará os dados brutos da API e enriquecerá as informações com outras fontes externas (como preços de mercado ou dados climáticos).
+Alimentação do Modelo de Machine Learning:
+Os dados processados alimentarão modelos preditivos para estimar demanda e tendências.
+Exposição dos Resultados:
+Os resultados das previsões serão disponibilizados em um dashboard interativo para tomada de decisão.
+
+Desenho da Arquitetura
++----------------+          +----------------+         +--------------------+
+|    Frontend    | <--API--> |   Flask API    | <--->   |  Banco de Dados    |
+|   Dashboard    |          | (Web Scraping) |         |   (PostgreSQL)     |
++----------------+          +----------------+         +--------------------+
+                                  |
+                                  v
+                         +----------------+
+                         |   ETL Process  |
+                         | (Apache Airflow|
+                         |    ou DBT)     |
+                         +----------------+
+                                  |
+                                  v
+                         +----------------+
+                         | Machine Learning|
+                         |  Model (e.g.,   |
+                         |   sklearn/TF)   |
+                         +----------------+
+                                  |
+                                  v
+                         +----------------+
+                         |   BI Tool       |
+                         | (Power BI,      |
+                         | Tableau, etc.)  |
+                         +----------------+
+
+
+3. Etapas do Deploy
+Etapa 1: Configuração da API
+Deploy na Vercel:
+Configure o projeto na Vercel para hospedar a API.
+Passos:
+Suba o código no GitHub.
+Conecte o repositório à Vercel.
+Defina o arquivo requirements.txt para instalar as dependências no ambiente de deploy.
+Endereço Público da API:
+Após o deploy, a API estará disponível em um endereço público fornecido pela Vercel.
+
+Etapa 2: Armazenamento dos Dados
+Configure um banco de dados PostgreSQL para armazenar os dados brutos e processados.
+Utilize tabelas organizadas por seções da API: produção, processamento, comercialização, importação e exportação.
+
+Etapa 3: Pipeline de ETL
+Use uma ferramenta como Apache Airflow ou DBT para:
+Automatizar a extração de dados da API.
+Transformar e limpar os dados.
+Enriquecer os dados com informações externas, como dados climáticos.
+
+Etapa 4: Desenvolvimento do Modelo de Machine Learning
+Escolha um modelo de previsão de demanda (como regressão linear, árvores de decisão ou redes neurais).
+Ferramentas sugeridas:
+Python (scikit-learn ou TensorFlow): Para treinar o modelo.
+MLflow: Para gerenciar versões do modelo.
+
+Etapa 5: Integração com o Dashboard
+Ferramenta de Visualização: Utilize Power BI ou Tableau para criar um painel que mostre:
+Dados históricos processados.
+Previsões geradas pelo modelo de ML.
+Integração com API: Configure o dashboard para consumir diretamente os dados da API ou da base de dados.
+
+
+4. Tecnologias Sugeridas
+Backend/API: Flask, Vercel (para deploy).
+Web Scraping: BeautifulSoup, Requests.
+Banco de Dados: PostgreSQL.
+ETL: Apache Airflow ou DBT.
+Machine Learning: scikit-learn, TensorFlow ou PyTorch.
+Dashboard: Power BI ou Tableau.
+5. Benefícios da Arquitetura
+Escalabilidade: A API pode ser facilmente ampliada para incluir novas fontes de dados.
+Automação: O pipeline de ETL automatiza todo o fluxo de dados, reduzindo o trabalho manual.
+Tomada de Decisão Baseada em Dados: O modelo de previsão gera insights acionáveis para os produtores e distribuidores.
+Flexibilidade: A arquitetura permite integração com ferramentas de BI e outras APIs.

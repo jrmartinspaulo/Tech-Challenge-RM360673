@@ -1,0 +1,69 @@
+API de Dados de Vitivinicultura da Embrapa
+Esse projeto foi criado para ajudar a acessar os dados de vitivinicultura que estão disponíveis no site da Embrapa. A ideia é facilitar o acesso a essas informações e oferecer um formato mais amigável, para que elas possam ser usadas em outras aplicações, como modelos de Machine Learning ou sistemas de análise.
+
+Sobre o Projeto
+A API consulta os dados diretamente das páginas da Embrapa, faz uma extração (scraping) das tabelas disponíveis e transforma as informações em JSON. Dessa forma, fica bem mais simples integrar esses dados a outros sistemas.
+
+Como Usar
+A API é bem simples de usar e está organizada em algumas seções principais. Cada seção corresponde a uma aba do site da Embrapa, como produção, processamento, etc.
+
+Endpoint Principal (/)
+Esse é o ponto de entrada da API. Quando você acessa a raiz, ela retorna informações básicas sobre o que está disponível.
+Exemplo de Resposta:
+{
+  "message": "Bem-vindo à API de dados de vitivinicultura!",
+  "instructions": "Você pode acessar os dados das seções pelos seguintes endpoints:",
+  "endpoints": [
+    "producao",
+    "processamento",
+    "comercializacao",
+    "importacao",
+    "exportacao"
+  ]
+}
+
+
+Seções Específicas (/<section>)
+Aqui você pode acessar os dados de cada seção específica. As opções são:
+
+producao
+processamento
+comercializacao
+importacao
+exportacao
+Exemplo de Uso:
+GET /producao
+
+Exemplo de Resposta:
+{
+  "section": "producao",
+  "data": {
+    "status": "success",
+    "data": [
+      ["Coluna1", "Coluna2", "Coluna3"],
+      ["Valor1", "Valor2", "Valor3"],
+      ["Valor4", "Valor5", "Valor6"]
+    ]
+  }
+}
+
+Estrutura do Projeto
+O projeto é bem simples e está organizado assim:
+.
+├── app.py               # Código principal da API
+├── requirements.txt     # Lista de dependências
+└── README.md            # Documentação do projeto
+
+
+Ferramentas Utilizadas
+Python 3.8+: Linguagem utilizada no projeto.
+Flask: Framework para construção da API.
+BeautifulSoup: Para realizar o web scraping.
+Requests: Para as requisições HTTP.
+Vercel: Para hospedar e compartilhar a API.
+
+
+O Que Pode Melhorar
+Cache: Adicionar cache para evitar consultas repetidas ao site.
+Autenticação: Criar uma camada de segurança para limitar o uso indevido da API.
+Paginação: Melhorar a forma como os dados são retornados, especialmente se as tabelas forem muito grandes.
